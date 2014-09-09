@@ -1,10 +1,6 @@
-
-############## PROYECTO EN PROCESO DE TERMINACIÓN ##############
-
-
---- PHP CLASS TO DECODE CAR VIN FROM THE EDMUNDS API ---
---- Developed by GAN Media Group / http://ganmedia.com ---
-
-Una simple clase que lee el json producto de la consulta a la API de Edmunds y devuelve los
-datos del vehículo.
-Sólo se necesita un Api Key de Edmunds y el VIN del vehículo.
+PHP CLASS TO DECODE CAR VIN FROM THE EDMUNDS API
+Developed by GAN Media Group - http://ganmedia.com
+====================
+What do you need?
+---------------------
+* You need to get a Developer API at http://developer.edmunds.com
