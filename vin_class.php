@@ -48,23 +48,56 @@ class Edmunds_vin_decorer {
 	public function Market() { #Simple Array(Luxury, Performance) 
 		return $this->base_json_path['categories']['Market'];
 	}
-	public function AirConditioning() { #Multiple Array(Climate Control Memory, Front Air Conditioning) 
-		return $this->base_json_path['attributeGroups']['AIR_CONDITIONING']['attributes'];
+	public function AirConditioning() { #Array(REAR_HEAT=>rear ventilation ducts, AIR_FILTRATION=>interior air filtration) 
+		$air = array();
+		$air_array = $this->base_json_path['attributeGroups']['AIR_CONDITIONING']['attributes'];
+		foreach ($air_array as $key=>$value) {
+			$air[$value['name']] = $value['value'];
+		}
+		return $air;
 	}
-	public function MobileConnectivity() { #Multiple Array(Phone, Bluetooth) 
-		return $this->base_json_path['attributeGroups']['MOBILE_CONNECTIVITY']['attributes'];
+	public function MobileConnectivity() { #Array(PHONE=>pre-wired for phone, BLUETOOTH=>Bluetooth) 
+		$mobile = array();
+		$mobile_array = $this->base_json_path['attributeGroups']['MOBILE_CONNECTIVITY']['attributes'];
+		foreach ($mobile_array as $key=>$value) {
+			$mobile[$value['name']] = $value['value'];
+		}
+		return $mobile;
 	}
 	public function NumberOfDoors() { #A number, for example: 4
 		return $this->base_json_path['attributeGroups']['DOORS']['attributes']['NUMBER_OF_DOORS']['value'];
 	}
-	public function Airbags() { #Head Airbag, Passenger Airbag
-		return $this->base_json_path['attributeGroups']['AIRBAGS']['attributes'];
+	public function Airbags() { #Array(HEAD_AIRBAGS=>front and rear, SIDE_AIRBAGS=>dual front)
+		$airbags = array();
+		$airbags_array = $this->base_json_path['attributeGroups']['AIRBAGS']['attributes'];
+		foreach ($airbags_array as $key=>$value) {
+			$airbags[$value['name']] = $value['value'];
+		}
+		return $airbags;
 	}
 	public function ExteriorLights() { #Front Fog Lights, Xenon Headlights
-		return $this->base_json_path['attributeGroups']['EXTERIOR_LIGHTS']['attributes'];
+		$lights_array = $this->base_json_path['attributeGroups']['EXTERIOR_LIGHTS']['attributes'];
+		$lights = array();
+		foreach ($lights_array as $key => $value) {
+			$lights[] = $key;
+		}
+		return $lights;
 	}
-	public function ExteriorDimensions() { #WHEELBASE, OVERALL LENGTH
-		return $this->base_json_path['attributeGroups']['EXTERIOR_DIMENSIONS']['attributes'];
+	public function ExteriorDimensions() { #Array(WHEELBASE=>109.3, OVERALL_LENGTH=>193.4)
+		$dimensions = array();
+		$dimensions_array = $this->base_json_path['attributeGroups']['EXTERIOR_DIMENSIONS']['attributes'];
+		foreach ($dimensions_array as $key=>$value) {
+			$dimensions[$value['name']] = $value['value'];
+		}
+		return $dimensions;
+	}
+	public function ConsumptionSpecification() { #Array(EGE_HIGHWAY_MPG=>25, EPA_CITY_MPG=>17)
+		$consumption = array();
+		$consumption_array = $this->base_json_path['attributeGroups']['SPECIFICATIONS']['attributes'];
+		foreach ($consumption_array as $key=>$value) {
+			$consumption[$value['name']] = $value['value'];
+		}
+		return $consumption;
 	}
 
 
@@ -72,59 +105,13 @@ class Edmunds_vin_decorer {
 
 $my_car = new Edmunds_vin_decorer('19UUA96249A800952');
 
-print_r($my_car->ExteriorDimensions());
-
-########### DATA - VARIABLES IMPORTANTES ############
-
-
-// $car_id = $base_json_path['id'];
-// $make = $base_json_path['makeName'];
-// $model = $base_json_path['modelName'];
-// $year = $base_json_path['year'];
-// $transmission_type = $base_json_path['transmissionType'];
-// $engine_type = $base_json_path['engineType']; # GAS
-// $engine_fuel_type = $base_json_path['engineFuelType'];
-// $engine_cylinder = $base_json_path['engineCylinder'];
-// $engine_size = $base_json_path['engineSize'];
-// $vehicle_type = $base_json_path['categories']['PRIMARY_BODY_TYPE'][0]; # CAR, TRUCK, ETC
-// $vehicle_style = $base_json_path['categories']['Vehicle Style'][0]; # SEDAN, SUV, ETC
-// $vehicle_size = $base_json_path['categories']['Vehicle Size'][0]; # MIDSIZE
-// $market = multiples_values($base_json_path['categories']['Market']); # PERFORMACE, LUXURY, ETC
-// $air_conditioning = multiples_values_array($base_json_path['attributeGroups']['AIR_CONDITIONING']['attributes']);
-// $mobile_connectivity = multiples_values_array($base_json_path['attributeGroups']['MOBILE_CONNECTIVITY']['attributes']);
-// $number_of_doors = $base_json_path['attributeGroups']['DOORS']['attributes']['NUMBER_OF_DOORS']['value'];
-// $airbags = multiples_values_array($base_json_path['attributeGroups']['AIRBAGS']['attributes']);
-// $exterior_lights = multiples_values_array($base_json_path['attributeGroups']['EXTERIOR_LIGHTS']['attributes']);
-// $exterior_dimensions = multiples_values_asociative_array($base_json_path['attributeGroups']['EXTERIOR_DIMENSIONS']['attributes']);
-// $consumption_specification = multiples_values_asociative_array($base_json_path['attributeGroups']['SPECIFICATIONS']['attributes']);
-// $exterior_lights = multiples_values_array($base_json_path['attributeGroups']['EXTERIOR_LIGHTS']['attributes']);
-
-################### END ######################
-
-############ MEDIA ###############
-// $base_media_path = 'http://media.ed.edmunds-media.com';
-// $urlmedia = 'http://api.edmunds.com/v1/api/vehiclephoto/service/findphotosbystyleid?styleId=' . $car_id . '&api_key=' . $api_key . '&fmt=json';
-// $json_media = file_get_contents($urlmedia);
-// $media = json_decode($json_media, true);
-
-//echo $urlcardata;
-
-// $find_me = '500.jpg';
-
-// for ($i=0; $i < count($media); $i++) {
-// 	foreach ($media[$i]['photoSrcs'] as $key => $value) {
-// 	 	$pos = strpos($value, $find_me);
-// 		if ($pos === false) {
-// 			continue;
-// 		}
-// 		else {
-// 			$car_photos[$media[$i]['vdpOrder']] = $base_media_path.$value;
-// 		}
-// 		 }
+print_r($my_car->ConsumptionSpecification());
+echo '<br>';
+// foreach ($my_car->ExteriorLights() as $item) {
+// 	echo $item.'<br>';
 // }
-
-// ksort($car_photos);
-
-
+foreach ($my_car->ConsumptionSpecification() as $key=>$value) {
+	echo $key . ': ' . $value . '<br>';
+}
 
 ?>
