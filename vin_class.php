@@ -92,6 +92,9 @@ class Edmunds_vin_decorer {
 	public function SteeringWheel() { # OUTPUT EXAMPLE: Array(EGE_HIGHWAY_MPG=>25, EPA_CITY_MPG=>17)
 		return $this->characteristics_list('STEERING_WHEEL');
 	}
+	public function FirstRowSeats() { # OUTPUT EXAMPLE: Array(EGE_HIGHWAY_MPG=>25, EPA_CITY_MPG=>17)
+		return $this->characteristics_list('1ST_ROW_SEATS');
+	}
 	public function SecondRowSeats() { # OUTPUT EXAMPLE: Array(EGE_HIGHWAY_MPG=>25, EPA_CITY_MPG=>17)
 		return $this->characteristics_list('2ND_ROW_SEATS');
 	}
@@ -104,6 +107,12 @@ class Edmunds_vin_decorer {
 	public function Suspension() { # OUTPUT EXAMPLE: Multiple Array(POWER_OUTLET(S): 12V)
 		return $this->characteristics_list('SUSPENSION');
 	}
+	public function Pricing() { # OUTPUT EXAMPLE: Multiple Array(POWER_OUTLET(S): 12V)
+		return $this->characteristics_list('PRICING');
+	}
+	public function CargoDimensions() { # OUTPUT EXAMPLE: Multiple Array(POWER_OUTLET(S): 12V)
+		return $this->characteristics_list('CARGO_DIMENSIONS');
+	}
 
 	# -------------
 	public function ChildSafety() { # OUTPUT EXAMPLE: Simple Array(CHILD_SAFETY_LOCKS, CHILD_SEAT_ANCHORS)
@@ -111,6 +120,9 @@ class Edmunds_vin_decorer {
 	}
 	public function Instrumentation() { # OUTPUT EXAMPLE: Simple Array(COMPASS, TACHOMETER)
 		return $this->characteristics('INSTRUMENTATION');
+	}
+	public function TractionStabilityControl() { # OUTPUT EXAMPLE: Simple Array(COMPASS, TACHOMETER)
+		return $this->characteristics('TRACTION/STABILITY_CONTROL');
 	}
 
 	public function characteristics($attribute) {
@@ -136,11 +148,15 @@ $my_car = new Edmunds_vin_decorer('19UUA96249A800952');
 
 // print_r($my_car->SecondRowSeats());
 // echo '<br>';
-// foreach ($my_car->2ndRowSeats() as $item) {
-// 	echo $item.'<br>';
-// }
-foreach ($my_car->Suspension() as $key=>$value) {
-	echo $key . ': ' . $value . '<br>';
+
+# Simple Array
+foreach ($my_car->TractionStabilityControl() as $item) {
+	echo $item.'<br>';
 }
+
+# Multiple Array
+// foreach ($my_car->TractionStabilityControl() as $key=>$value) {
+// 	echo $key . ': ' . $value . '<br>';
+// }
 
 ?>
