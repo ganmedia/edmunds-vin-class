@@ -3,7 +3,7 @@
 
 class Edmunds_vin_decorer {
 
-	public function __construct($vin, $api_key = '') { # Please specify you Edmunds API Key here. Something like: dc8a9ffxmhcdbcdhv4h7d6fz
+	public function __construct($vin, $api_key = 'YOUR_API_KEY_HERE') { # The Edmunds API Key should be something like: dc8a9ffxmhcdbcdhv4h7d6fz
 		$this->urlcardata = 'http://api.edmunds.com/v1/api/toolsrepository/vindecoder?vin=' . $vin . '&fmt=json&api_key=' . $api_key;
 		$this->json = file_get_contents($this->urlcardata);
 		$this->data = json_decode($this->json, true);
