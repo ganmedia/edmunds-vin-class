@@ -3,7 +3,7 @@
 
 class Edmunds_vin_decorer {
 
-	public function __construct($vin, $api_key = 'dc9a9ffxmhbdbcqhv2h5d6ez') {
+	public function __construct($vin, $api_key = '') { # Please specify you Edmunds API Key here. Something like: dc8a9ffxmhcdbcdhv4h7d6fz
 		$this->urlcardata = 'http://api.edmunds.com/v1/api/toolsrepository/vindecoder?vin=' . $vin . '&fmt=json&api_key=' . $api_key;
 		$this->json = file_get_contents($this->urlcardata);
 		$this->data = json_decode($this->json, true);
@@ -113,6 +113,45 @@ class Edmunds_vin_decorer {
 	public function CargoDimensions() { # OUTPUT EXAMPLE: Multiple Array(POWER_OUTLET(S): 12V)
 		return $this->characteristics_list('CARGO_DIMENSIONS');
 	}
+	public function StyleInfo() { # OUTPUT EXAMPLE: Multiple Array(EPA_CLASS=>Midsize Cars, WHERE_BUILT: United States)
+		return $this->characteristics_list('STYLE_INFO');
+	}
+	public function Steering() { # OUTPUT EXAMPLE: Multiple Array(POWER_STEERING=>electric speed-proportional power steering)
+		return $this->characteristics_list('STEERING');
+	}
+	public function DriveType() { # OUTPUT EXAMPLE: Multiple Array(DRIVEN_WHEELS=>all wheel drive)
+		return $this->characteristics_list('DRIVE_TYPE');
+	}
+	public function Storage() { # OUTPUT EXAMPLE: Multiple Array(CUPHOLDERS_LOCATION=>front and rear, SEATBACK_STORAGE: front seatback storage)
+		return $this->characteristics_list('STORAGE');
+	}
+	public function FrontPassengerSeat() { # OUTPUT EXAMPLE: Multiple Array(HEATED_PASSENGER_SEAT=>multi-level heating)
+		return $this->characteristics_list('FRONT_PASSENGER_SEAT');
+	}
+	public function SeatingConfiguration() { # OUTPUT EXAMPLE: Multiple Array(1ST_ROW_SEATING_CAPACITY=>2)
+		return $this->characteristics_list('SEATING_CONFIGURATION');
+	}
+	public function DriverSeat() { # OUTPUT EXAMPLE: Multiple Array(1ST_ROW_SEATING_CAPACITY=>2)
+		return $this->characteristics_list('DRIVER_SEAT');
+	}
+	public function Windows() { # OUTPUT EXAMPLE: Multiple Array(1ST_ROW_SEATING_CAPACITY=>2)
+		return $this->characteristics_list('WINDOWS');
+	}
+	public function Trunk() { # OUTPUT EXAMPLE: Multiple Array(1ST_ROW_SEATING_CAPACITY=>2)
+		return $this->characteristics_list('TRUNK');
+	}
+	public function Sunroof() { # OUTPUT EXAMPLE: Multiple Array(1ST_ROW_SEATING_CAPACITY=>2)
+		return $this->characteristics_list('SUNROOF');
+	}
+	public function InteriorDimensions() { # OUTPUT EXAMPLE: Multiple Array(1ST_ROW_SEATING_CAPACITY=>2)
+		return $this->characteristics_list('INTERIOR_DIMENSIONS');
+	}
+	public function Security() { # OUTPUT EXAMPLE: Multiple Array(2ND_ROW_LEG_ROOM=>36.2, 1ST_ROW_HIP_ROOM=>55.7)
+		return $this->characteristics_list('SECURITY');
+	}
+	public function InteriorFeatures() { # OUTPUT EXAMPLE: Multiple Array(FLOOR_MAT_MATERIAL=>carpet, CARGO_AREA_LIGHT=>trunk light)
+		return $this->characteristics_list('MISC._INTERIOR_FEATURES');
+	}
 
 	# -------------
 	public function ChildSafety() { # OUTPUT EXAMPLE: Simple Array(CHILD_SAFETY_LOCKS, CHILD_SEAT_ANCHORS)
@@ -123,6 +162,9 @@ class Edmunds_vin_decorer {
 	}
 	public function TractionStabilityControl() { # OUTPUT EXAMPLE: Simple Array(COMPASS, TACHOMETER)
 		return $this->characteristics('TRACTION/STABILITY_CONTROL');
+	}
+	public function NciStandardFacet() { # OUTPUT EXAMPLE: Simple Array(AUTOMATIC_CLIMATE_CONTROL, CD_MP3_PLAYBACK)
+		return $this->characteristics('NCI_STANDARD_FACET');
 	}
 
 	public function characteristics($attribute) {
@@ -150,13 +192,13 @@ $my_car = new Edmunds_vin_decorer('19UUA96249A800952');
 // echo '<br>';
 
 # Simple Array
-foreach ($my_car->TractionStabilityControl() as $item) {
-	echo $item.'<br>';
-}
+// foreach ($my_car->NciStandardFacet() as $item) {
+// 	echo $item.'<br>';
+// }
 
 # Multiple Array
-// foreach ($my_car->TractionStabilityControl() as $key=>$value) {
-// 	echo $key . ': ' . $value . '<br>';
-// }
+foreach ($my_car->pricing() as $key=>$value) {
+	echo $key . ': ' . $value . '<br>';
+}
 
 ?>
